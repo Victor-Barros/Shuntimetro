@@ -8,12 +8,12 @@ int16_t adc0;
 int16_t adc1;
 int16_t adc2;
 boolean debug;
-#include "cabecalho.h"
 #include "tensaoAC.h"
 #include "corrente.h"
 #include "freq.h"
 #include "shunt.h"
 #include "tensaoDC.h"
+String mensagem_bluetooth;
 
 void contPulsos()
 {
@@ -29,7 +29,17 @@ void leituras() {
   delay(50);
 }
 
+void enviar_bluetooth() {
+  mensagem_bluetooth="";
+
+  mensagem_bluetooth+="*a"+String(freq)+"*";
+  mensagem_bluetooth+="*b"+String(current)+"**B"+String(current)+",*";
+  
+  
+}
+
 void setup() {
+  pinMode(9, INPUT_PULLUP);
   if (digitalRead(9) == 1) { 
     debug=1;
     Serial.begin(9600);      //Modo de debug
@@ -47,4 +57,5 @@ void setup() {
 
 void loop() {
   leituras();
+  if (!debug) enviar_bluetooth();
 }
