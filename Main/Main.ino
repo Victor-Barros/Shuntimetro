@@ -25,13 +25,14 @@ void leituras() {
   read_shunt();
   read_AC();
   read_DC();
+  delay(50);
 }
 
 void setup() {
   if (digitalRead(9) == 1) { //Modo de debug
     Serial.begin(9600);
   } else {                   //Modo Bluetooth
-    Serial.begin(9600);
+    Serial.begin(115200);
   }
   
   pinMode(2,INPUT);
