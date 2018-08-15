@@ -6,8 +6,10 @@ void read_shunt() {
   busvoltage = ina219.getBusVoltage_V();
   shunt_current = ina219.getCurrent_mA();
   loadvoltage = busvoltage + (shuntvoltage / 1000);
-  Serial.print("Shunt Current(mA)=");
-  Serial.println(shunt_current);
+  if (debug) {
+    Serial.print("Shunt Current(mA)=");
+    Serial.println(shunt_current);
+  }
 }
 
 

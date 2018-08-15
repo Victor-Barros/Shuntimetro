@@ -7,6 +7,7 @@ Adafruit_ADS1115 ads1115;
 int16_t adc0;
 int16_t adc1;
 int16_t adc2;
+boolean debug;
 #include "cabecalho.h"
 #include "tensaoAC.h"
 #include "corrente.h"
@@ -29,10 +30,12 @@ void leituras() {
 }
 
 void setup() {
-  if (digitalRead(9) == 1) { //Modo de debug
-    Serial.begin(9600);
-  } else {                   //Modo Bluetooth
-    Serial.begin(115200);
+  if (digitalRead(9) == 1) { 
+    debug=1;
+    Serial.begin(9600);      //Modo de debug
+  } else {   
+    debug=0;                
+    Serial.begin(115200);    //Modo Bluetooth
   }
   
   pinMode(2,INPUT);

@@ -12,7 +12,9 @@ void read_freq() {
     onelasttime = tempo;
     interrupts();
   }
-  Serial.print("Frequency(Hz)=");
-  Serial.println(freq);
+  if (debug) {
+    Serial.print("Frequency(Hz)=");
+    Serial.println(freq);
+  }
 }
 

@@ -1,11 +1,12 @@
 float ac_voltage=0;
 
-float read_AC() {
+void read_AC() {
   ac_voltage=read_using_sine_wave(1);
   if(ac_voltage<0) ac_voltage=0; 
-  Serial.print("AC Voltage(V)="); 
-  Serial.println(ac_voltage);
-  return ac_voltage;
+  if (debug) {
+    Serial.print("AC Voltage(V)="); 
+    Serial.println(ac_voltage);
+  }
 }
 
 float read_using_sine_wave(int adc_pin) {
