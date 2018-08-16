@@ -31,11 +31,14 @@ void leituras() {
 
 void enviar_bluetooth() {
   mensagem_bluetooth="";
-
   mensagem_bluetooth+="*a"+String(freq)+"*";
   mensagem_bluetooth+="*b"+String(current)+"**B"+String(current)+",*";
-  
-  
+  mensagem_bluetooth+="*c"+String(shunt_current)+"**C"+String(shunt_current)+",*";
+  mensagem_bluetooth+="*d"+String(ac_voltage)+"**D"+String(ac_voltage)+",*";
+  mensagem_bluetooth+="*e"+String(dc_voltage)+"**E"+String(dc_voltage)+",*";
+  if (dc_millis) mensagem_bluetooth+="*fmV*";
+  else mensagem_bluetooth+="*fV*";
+  Serial.println(mensagem_bluetooth);
 }
 
 void setup() {
@@ -58,4 +61,5 @@ void setup() {
 void loop() {
   leituras();
   if (!debug) enviar_bluetooth();
+  else delay(500);
 }
