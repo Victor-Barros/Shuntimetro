@@ -36,14 +36,16 @@ void enviar_bluetooth() {
   mensagem_bluetooth+="*c"+String(shunt_current)+"**C"+String(shunt_current)+",*";
   mensagem_bluetooth+="*d"+String(ac_voltage)+"**D"+String(ac_voltage)+",*";
   mensagem_bluetooth+="*e"+String(dc_voltage)+"**E"+String(dc_voltage)+",*";
-  if (dc_millis) mensagem_bluetooth+="*fmV*";
-  else mensagem_bluetooth+="*fV*";
+  mensagem_bluetooth+="*f"+String(dc_voltage_mv)+"**F"+String(dc_voltage_mv)+",*";
+  mensagem_bluetooth+="*g"+String(dc_voltage*shunt_current/1000)+"**G"+String(dc_voltage*shunt_current/1000)+",*";
+  mensagem_bluetooth+="*h"+String(ac_voltage*current)+"**H"+String(ac_voltage*current)+",*";
+  
   Serial.println(mensagem_bluetooth);
 }
 
 void setup() {
   pinMode(9, INPUT_PULLUP);
-  if (digitalRead(9) == 1) { 
+  if (digitalRead(9) == 0) { 
     debug=1;
     Serial.begin(9600);      //Modo de debug
   } else {   
@@ -51,7 +53,7 @@ void setup() {
     Serial.begin(115200);    //Modo Bluetooth
   }
   
-  pinMode(2,INPUT);
+  pinMode(2,INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(2),contPulsos, FALLING);
   ads1115.begin();
   ina219.begin();
@@ -61,5 +63,5 @@ void setup() {
 void loop() {
   leituras();
   if (!debug) enviar_bluetooth();
-  else delay(500);
+  //else delay(500);
 }
